@@ -2,9 +2,13 @@
 * CSCI 476
 * benjamin.holmgren1@student.montana.edu
 
-1.) ![VM](SEED_VM.png)
+1.) Screenshot of running VM
 
-2.) ![Q](questionnaire.png)
+![VM](SEED_VM.png)
+
+2.) Screenshot of email confirmation of completed survey
+
+![Q](questionnaire.png)
 
 3.) 3 brief lessons from this assignment include:
 * A reminder on how to make it so that I don't need to type in my username 
