@@ -1,1 +1,3 @@
-# csci-476-594-spring2021-private
+Ben Holmgren (f15p655)
+CSCI 476
+benjamin.holmgren1@student.montana.edu
