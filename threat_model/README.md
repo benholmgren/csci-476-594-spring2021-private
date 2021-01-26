@@ -65,9 +65,11 @@ keys that are the most worn down.
 * My approach doesn't deal at all with someone accessing a laptop via facial recognition or fingerprint software. I'm not sure how difficult this is to fabricate, but I don't have much of a plan to prevent potential vulnerabilities in this regard.
 
 
+* I don't have much of a plan for if someone were to just simply damage my hardware. My only options are pretty expensive and time consuming.
+
 ## 4.) (Reflection) Areas for improvement
 
-* I don't have much of a plan for if someone were to just simply damage my hardware. My only options are pretty expensive and time consuming.
+* I could see what other threat models might have in the way of protection against physical damage of a computer, I can't be the first person who doesn't want their computer broken by some random person.
 
 * I could try one of the rigorous, well established threat models used in the field instead of my simple brainstorming approach.
 
