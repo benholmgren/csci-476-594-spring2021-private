@@ -11,4 +11,4 @@ loop.
 
 2. 
 
-![data](./data.pdf)
+![memory_image](./data.pdf)
