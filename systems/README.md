@@ -11,4 +11,4 @@ loop.
 
 2. 
 
-* ![data](./data.pdf)
+![data](data.pdf)
