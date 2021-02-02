@@ -1,0 +1,3 @@
+- Looks great!
+- You may want to fix up how you do the header of your submission. For reference, see https://www.traviswpeters.com/cs476-2021-spring/labs#example-structure-of-a-lab-report-readmemd
+- Your submissions is actually out of order - while not a huge deal, this is odd and could be confusing to graders in the future. Please be sure to read and follow the submission instructions *exactly*. 
