@@ -1,4 +1,11 @@
-1. 
+## Systems & Software: Towards Security
+## Ben Holmgren (f15p655)
+## benjamin.holmgren1@student.montana.edu
+## CSCI 476
+## Due 2/2/2021
+
+
+### Task 1 
 
 * The fork() syscall copies the current calling process, creating a child process. In effect, this creates 
 a second identical process which may be used to carry out a desired task, while keeping the REPL loop going.
@@ -9,11 +16,13 @@ one is able to make the new calling process execute a desired program, changing 
 is desired while still maintaining a REPL
 loop. 
 
-2. 
+### Task 2
+For some reason my linked image isn't showing up in the README, but if you just click the link it'll open and you
+can view my solution
 
 ![memory_image](./data.pdf)
 
-3.
+### Task 3
 
 It is important that code and data are delineated, because we need to pretty rigorously and universally know where 
 instructions should be in memory. That way, no matter the operating system or programming language or whatever else, 
@@ -23,7 +32,7 @@ that could come from giving a computer a set of instructions (code) we need to k
 and further, we need to know that data will be in another reserved (seperate) place, where it too may be accessed when
 desired.
 
-4.
+### Task 4
 
 A few threats that seem immediately apparent could stem from the allocation of memory for specific tasks, and the limitations
 that coincide with that allocation. Namely, one may worry about overflowing a buffer, a stack, or a heap, thereby making a program
@@ -32,13 +41,13 @@ which may not be intended. Further, it may also be possible to access the code l
 program so that it does what we want. This may be done through tampering in the BSS layer through some global static data in some way.
 I'm not sure quite how this would work but I'd bet that it's been done.
 
-5.
+### Task 5
 
 A trust boundary, is the delineation in memory of areas that may be accessed by other layers, and areas that are not supposed be accessible
 by other layers. Namely, given some level of privilege, one may or may not access some specific area in memory, the lines of which are determined
 by this trust boundary.
 
-6.
+### Task 6
 
 Major elements of a stack frame include the arguments to a function, a return address, the previous frame pointer, and local variables. Arguments to the
 function are important because they almost certainly are accessed throughout the execution of that function, a return address is important in case the
@@ -48,7 +57,7 @@ executing one function. Finally, we need to address local variables, which may b
 return value.
 
 
-7.
+### Task 7
 
 * Main is located towards the bottom addresses in memory, in the page that's executable. Main is stored near the bottom since it's code, and as it is a set of
 instructions, it needs to be designated as executable.
@@ -63,7 +72,7 @@ stack frame and live on the stack.
 to the user environment, and it gets copied when a child process is created so that the environment of a program stays consistent throughout function calls.
 From earlier, this sounds a lot like the part of a stack frame which keeps track of previous function calls. As such, it makes sense that it also lives on the stack. 
 
-8.
+### Task 8
 
 * The compiler first runs a program through the preprocessor. When run through the preprocessor, we resolve directives such as #include, #if, and that sort of
 thing that's preliminary for our functions to run correctly. This may be viewed in .i files
