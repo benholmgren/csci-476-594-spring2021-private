@@ -1,0 +1,3 @@
+- Looks good!
+- Missing required elements. Please review submission instructions carefully (missing e.g., 'description', 'strengths', 'weaknesses', and/or 'improvements')
+- Please fix the header for your submission. See https://www.traviswpeters.com/cs476-2021-spring/labs#example-structure-of-a-lab-report-readmemd.
