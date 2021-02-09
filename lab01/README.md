@@ -194,6 +194,8 @@ Running the provided code after making it root owned and Set-UID, I was able to 
 
 ![etc](etc.png)
 
+![malicious](malicious.png)
+
 I think that this makes sense, because of capability leaking, as mentioned in the prompt. The program we used clearly
 doesn't clean up the capabilities from the time it's first accessed to the time it's ended, because we access
 the program with heightened capabilities and then are able to call other programs while maintaining these same 
