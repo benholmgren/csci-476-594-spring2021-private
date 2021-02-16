@@ -68,12 +68,14 @@ for this one example because the environment has been passed in as a parameter.
 
 ### Task 3.3
 
-As mentioned previously, the new program appears to get its environment variables from 
-/usr/bin/env, which may differ from the environment variables set at the location from
-which the program ends up being called. Indeed, one may observe that these environment
-variables often coincide with /usr/bin/env and they include links to the execve program
-which aren't found when simply running printenv in the Desktop. Often, these two have the
-same environment variables, but not necessarily always.
+As mentioned previously, the new program runs with environ as a parameter. Indeed, one may observe 
+that these differences seem to occur as a result of environ being called in as a parameter. Namely,
+the differences, I'd presume, arise from the fact that environ is called as a parameter, and as a result,
+is inheriting the values of a child process. These values definitely have the potential to differ from
+just the standard environment in the shell, since the whole point of creating a child process is to execute
+or do something. Thus, the environment may invariably change in some regards. As such, I'm presuming that the
+differences are stemming from this call to environ as a parameter, which really stems from the creation of a child process
+that isn't existing in other calls to environ.
 
 ### Task 4
 
