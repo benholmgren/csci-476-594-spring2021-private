@@ -61,9 +61,64 @@ that maybe the HTTP_referer variable could be important, though if we wanted to 
 strategic name to parrot some intended named variable to be used by the CGI, I'd presume we could potentially make
 a variable with an identical name but which could cause some sort of mischevous functionality. I could also imagine
 that a user ID might matter for some scenarios, but I think the other two options (targeting the '-H' and '-e' 
-options) sound more potentially nefarious.
+options) sound more potentially nefarious. However, the whole point of this is that we can execute an unintended
+command using this function declaration characteristic of this old version of bash. So it seems like any of these
+options (-A, -H, or -e) should all work, because all we need to do is to inject any data into the server, so that
+in the end we are able to attach an undesired command with that data. So I'm planning to start by trying -A and
+see where that takes me in the next section.
 
-### Task 3
+### Task 3.1
+
+I hacked the mainframe!! Using the /bin/cat command carefully inserted within a curl command sent to the server,
+I was able to obtain the contents of /etc/passwd without having any privilege to do so. This was successful
+with the -A and -e options, but not with the -H options connected with curl. The following are the 
+results I found:
+
+![p1](passwd1.png)
+
+![p2](passwd2.png)
+
+![p3](passwd3.png)
+
+### Task 3.2
+
+I got it! This is so cool. I ended up trying both the -A and -H options, for me only the -A option worked.
+
+![id](id.png)
+
+### Task 3.3
+
+I successfully wrote to a file that I created in the tmp directory, and named the file ATTACK. It's really
+starting to set in for me how much damage you could do with this attack!! I've got all the power!!!
+
+![write](write.png)
+
+### Task 3.4
+
+In the exact same manner as everything we've done so far, we can call /bin/rm and remove the ATTACK file
+from the tmp directory.
+
+![rm](rm.png)
+
+### Task 3.5
+
+For this task, I wasn't successful in stealing this /etc/shadow file. I would've thought that I'd be able to
+steal its contents, or at least read them using the cat command as I did before, but using the cat command as
+before I just found an empty output:
+
+![steal1](steal1.png)
+
+And furthermore, attempting to use the cp command to put the contents of the file into another file, I again
+was unsuccessful. I used the exact same cat command as before which had worked previously, and I tried to cp
+with both the -A and -e options, which were the options that had been working earlier for me. Here's what I tried,
+and my empty resulting outputs.
+
+![steal2](steal2.png)
+
+I think this makes sense that I was unable to attain the contents of this file. From 3.2, I've gained the user Id
+of the current process, which is 33. I don't believe this Id corresponds to root, which should have Id 0. As a
+result, since root is the only thing with permissions for this file, I don't think I can access it. Or if I can,
+I can't do so with the standard tricks that have worked up to this point without root access.
 
 
 
