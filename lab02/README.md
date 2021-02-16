@@ -134,4 +134,14 @@ And here is the payload I used to acquire this shell.
 
 ### Task 5
 
+Getting rid of the old version of bash, we are unable to conduct any of the same shellshock attacks. For
+every single old command, we just enter into an infinite loop, and no response is ever given. To demonstrate,
+here is what I used to shut down the container, thereby reinstating the patched version of bash,
+and then what I found when using the /bin/cat command to read the passwords file that I had access to earlier.
 
+![passwd2](down.png)
+
+And here's my output for the rest of the commands that worked in part 3 (except for stealing /etc/shadow which 
+didn't work for either version of bash). All of them ended in an infinite loop.
+
+![betterbash](bash.png)
