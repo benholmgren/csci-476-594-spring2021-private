@@ -120,5 +120,18 @@ of the current process, which is 33. I don't believe this Id corresponds to root
 result, since root is the only thing with permissions for this file, I don't think I can access it. Or if I can,
 I can't do so with the standard tricks that have worked up to this point without root access.
 
+### Task 4
+
+I created a reverse shell successfully using 2 terminals! So cool! It took me way longer than it should've to craft
+the perfect payload, but I got the magic to happen and I gained a reverse shell.
+
+![rshell1](rshell.png)
+
+And here is the payload I used to acquire this shell.
+
+![payload](payload.png)
+
+
+### Task 5
 
 
