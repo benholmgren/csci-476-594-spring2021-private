@@ -82,4 +82,32 @@ which let me achieve such a feat:
 
 ![payload](payload.png)
 
+### Task 3
+
+Succinctly, our approach here for a buffer overflow attack without
+knowing the size of the buffer beforehand is to spray the return
+address everywhere. I say this tongue in cheek, but we're going to just
+insert a new return address everywhere that we had NOP's earlier
+leading up to our new return address as before, but not above this new
+address in memory. With the knowledge that the buffer may be of size
+anywhere between 100 and 200 bytes, and knowing that the value stored in
+the frame pointer must always be a multiple of four, we can just insert a
+return address at every 4th byte from byte 100 to 200 in our content string.
+
+Doing so, we're able to successfully conduct another buffer overflow attack:
+
+![buff2](buff2.png)
+
+For the sake of clarity, all steps as before in task 2 were the same, except we 
+disregarded the offset value we obtained from directly looking
+at where the buffer began and ended in memory. We then built up the content
+string as follows, placing a return address at every 4th byte from bytes
+100 to 200:
+
+![proc2](proc2.png)
+
+
+### Task 4.1:
+
+
 
