@@ -109,5 +109,88 @@ string as follows, placing a return address at every 4th byte from bytes
 
 ### Task 4.1:
 
+First, I ran the a32.out and a64.out executables without the
+assembly that makes the setuid(0) sys call. Unsurprisingly, 
+I obtained a shell, and this shell did not have root privilege
+for both the 32 and 64 bit versions. Here is what I ran:
 
+![noset](noset.png)
 
+This makes sense to me- this is the same thing as invoking
+a shell without any sort of heightened privilege or any kind of
+trickery using a buffer overflow, so of course we have a seed
+shell.
+
+Next, I ran the a32.out and the a64.out executables with the 
+setuid(0) call invoked. I again found that the resulting
+shell did not have root privilege. This too makes sense to me,
+since, though the program invoking the shell itself is root owned, 
+we haven't done anything special to actually gain root privilege
+in the executed shell. Running a root owned program is an
+entirely different thing than running a root owned program
+and obtaining root access.
+
+Here is my output for this subtask, with evidence that
+I indeed obtained a shell with only seed access again:
+
+![set](set.png)
+
+To gain root access, I think we'll need to do something 
+like overflowing a buffer! I say this because the shell
+with this countermeasure can detect that the effective
+UID isn't the real ID. However, if we overflow a buffer,
+this should go out the window entirely, since the shell
+shouldn't have any reason to detect the effective UID doesn't
+actually equal the real UID.
+
+### Task 4.2
+
+I put on my hackerman shoes and successfully breached the mainframe.
+As supporting evidence, here is my output when doing such a thing
+(directly after invoking the correct shell, too):
+
+![setover](setoverflow.png)
+
+I was able to achieve such a feat by simply adding in the assembly
+to invoke setuid(0) at the start of my shellcode. I did this for
+a 32-bit setting, as this is what we've been doing so far. I obtained
+this additional line of code from the shellcode/ folder. This magical
+payload was constructed as follows:
+
+![magic](magic.png)
+
+### Task 5.1
+
+### Task 5.2
+
+### Task 6.1
+
+First, we turn the stack guard back on by commenting out the original
+flag in the Makefile:
+
+![comment](comment.png)
+
+Next, we remake the executables, and run our attack that was used in
+the first buffer overflow attack we carried out. This ends up being
+unsuccessful. We are prompted with the message that "stack smashing
+detected" and the program terminates. The output is as follows:
+
+![smash](smash.png)
+
+### Task 6.2
+
+Next, we make the stack non-executable. Since we know for sure that
+the earlier attack won't work if we comment out the original flag in
+the Makefile for the stack guard, we reinstate the flag blocking
+the stackguard, and instead instate the -Z noexecstack. This makes
+our attack not possible and results in a seg fault:
+
+![seg](seg.png)
+
+Now, I performed this task without fully reading the prompt for the
+lab. I'm actually supposed to run the code in the /shellcode directory
+with a non executable stack. I'd expect to find an identical result
+as was found for my unsuccessful attack above. Indeed, this is the
+case: 
+
+![seg2](seg2.png)
