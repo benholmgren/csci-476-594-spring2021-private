@@ -29,7 +29,7 @@ these hex values equate to.
 
 Examining this table, and without getting too in the weeds (as the prompt
 asks that we **briefly** describe what main does), we discover that for both
-programs, execve("/bin/sh", argv, 0) is being called.
+programs the effect is that execve("/bin/sh", argv, 0) is being called.
 
 ### Task 2.1
 
@@ -161,7 +161,30 @@ payload was constructed as follows:
 
 ### Task 5.1
 
+Turning on ASLR and rerunning the same kind of
+attack that has worked before against stack-L1, I was not exceedingly
+lucky and found the expected result, a seg fault. My output
+for the same previously successful attack is as follows:
+
+![aslrwon](aslrwon.png)
+
+This makes sense! It would be a near miracle if I happened
+to guess the exact correct random address on the first try.
+
 ### Task 5.2
+
+After a few minutes of running the provided shell script, which just
+tries the same address over and over again until ASLR has assigned
+this address correctly for us in memory, I was able to gain a root shell.
+Here is my output:
+
+![woopwoop](woopwoop.png)
+
+And here is the code that I ran to achieve such a feat. Note that the
+provided shell script in the prompt is what's being run in brutusthebrutishbruteforcer.sh, and this is the moment right before I hit enter and unleashed
+a firehose of output.
+
+![brutus](brutus.png)
 
 ### Task 6.1
 
