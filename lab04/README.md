@@ -147,9 +147,7 @@ has a password that we know!
 
 ### Task 4
 
-For me, patching the code here proved to be the crux of this lab.
-I struggled to get the patched version to work correctly when
-providing actual legal input. But, after a decent amount of time, I
+For me, this part could be finicky. After a decent amount of time, I
 arrived at the following code which replaces the dangerous section of 
 code previously located in 04_sqli/image_www/code/defense/unsafe.php. 
 
@@ -177,8 +175,36 @@ if ($stmt->num_rows > 0) {
 
 ```
 
-Then indeed, the attack that we've used the entire time is no longer
-successful:
+We end up replacing the entire vulnerable section with this. Specifically,
+that includes just the couple lines which I've included:
 
+```
+$result = $conn->query("SELECT id, name, eid, salary, ssn
+                        FROM credential
+                        WHERE name= '$input_uname' and password= '$hashed_pwd'");
+if ($result->num_rows > 0) {
+  // only take the first row 
+  $firstrow = $result->fetch_assoc();
+```
+
+Where anywhere the variable 'result' is used we switch it with 'stmt', and
+otherwise proceed with the code given to us in the prompt, only with input
+variables corresponding to our database.
+
+Then indeed, the attack that we've used the entire time is no longer successful,
+but we're still able to access our database if we provide the correct login.
+
+As an aside, after figuring this out and then going back the next day to take
+screenshots, for some reason my virtual machine stopped letting me 
+access the sql database at all on the webpage, even with just the old code,
+and deleting and recloning the repository and running the docker commands as I'd
+done before. Normally I'd include a screenshot here, but since this is the very
+end of the lab, this time I'm going to
+rely on the fact that, from simple inspection, we know that the provided code
+should perform the intended purpose. We know this to be true, because
+it is simply the provided code, modified to fit the variables for this
+database. The modifications we needed to make included just changing the type
+of input from "is" to "ss", and otherwise just binding and selecting variables
+that exist in our database, rather than those nonsense variables in the example.
 
 
