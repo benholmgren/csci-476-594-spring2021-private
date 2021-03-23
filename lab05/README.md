@@ -166,4 +166,49 @@ in the same location where the payload lies, this has the effect of just erasing
 the attack ineffective.
 
 
+### Task 6
 
+Now, we string all of our achievements together from throughout the lab
+to create a mega worm, capable of infecting all of elgg. For starters, we
+simply copy and paste the code that made us successful earlier. Then, we note
+that we don't want to initialize and reuse the same variables twice,
+so we rename any variables where there would be overlap otherwise. (For 
+example, switch the first Ajax to Aj, etc). The last step we need is to
+carefully embed the worm code that's been given to us. We do so by inserting the
+wormcode (i.e. all of the code that we've just written) directly inside of
+the description text we're inserting, by the same method used in part 5. Adding
+in the wormCode variable directly after the chosen message that "Samy
+is a god among men", we conclude with the following payload:
+
+![payload](payloadfinal.png)
+
+Then, we visit Samy's profile as another user, Alice. We then discover that
+indeed, Alice has been infected by the worm. Namely, Alice is now friends with
+Samy, even though she would never actually befriend him.
+
+![alicefriend](alicefriend.png)
+
+And furthermore, Alice has declared that Samy is a god among men on her
+profile.
+
+![alicegod](alicegod.png)
+
+Inspecting Alice's profile, we see the worm code now lingering behind the
+scenes in her 'about me' section.
+
+![aliceworm](aliceworm.png)
+
+Now, unsuspecting Boby visits Alice's profile. 
+![unsuspecting](unsuspecting.png)
+
+We find the desired result, that indeed Boby has now befriended
+Samy, without intending to in any way, and without even visiting
+Samy's profile.
+
+![bobyfriend](bobyfriend.png)
+
+Lastly, we find that Boby has also in fact posted on his profile that
+Samy is a god among men, as we'd hoped! Woohoo, we've created the ultimate
+elgg worm!!
+
+![bobygod](bobygod.png)
