@@ -32,11 +32,11 @@ but this time we have an alert pop up displaying the cookies of a given browser.
 
 This is done with the following payload:
 
-![cookies1](cookies1.png)
+![cookies1](cookie1.png)
 
 Delivering the desired output, displaying the browser's cookies at that moment.
 
-![cookies2](cookies2.png)
+![cookies2](cookie2.png)
 
 ### Task 3
 
