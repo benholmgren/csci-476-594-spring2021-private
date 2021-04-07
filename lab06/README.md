@@ -111,7 +111,6 @@ are filled by \v, the slots padding the 10 byte file are padded by 006, and the 
 padding the 16 byte file contain 020.
 
 OFB and CFB do not need padding
-TODO:WHY!!!
 
 ### Task 4.1
 
@@ -160,7 +159,77 @@ We will see if my hypotheses holds up in practice.
 
 ### Task 4.2
 
-I created a file with 1000 bytes entirely containing the word 'yeehaw':
+I created a file with 1000 bytes entirely containing the word 'yeehaw', and then encrypted it using the AES
+cipher with the ECB mode of operation. Then I changed one bit in the 55th byte in the encrypted file. Here
+is the decrypted result: (Note that you get an error when outputting this because editing hex in vim is
+kinda finnicky, but in actuality the error seems to mean nothing and the desired change is indeed present
+in the decrypted file)
 
-![yeehaw](yeehaw.png)
+![thousandcmd](thousandcmd.png)
+
+And here is the resulting output. We can observe that some underlying information in the original file
+was lost in the corruption that occured in the encrypted version. However, the vast majority of the
+content remained untouched for a single corrupted byte. This verifies that the only thing that has been
+affected is a single block in this data.
+
+![outecb](outecb.png)
+
+### Task 4.3
+
+Next, I repeated 4.2 with CBC mode:
+
+![outcbc](outcbc.png)
+
+Again, we find that we've only corrupted a single block in the decrypted version, and the rest
+of the content that we've encrypted remains intact. The corruption looks a little bit different this time,
+but the effect is the same- we retain all of the content except for the content intersecting with the
+byte that was corrupted.
+
+### Task 4.4
+
+For EFB, we also find that we've only corrupted a single block in the decrypted version. Again, the output
+is slightly different, but the result is effectively the same as that in 4.2 and 4.3. In the end, we find
+that the final product contains all of the original information, with corruption only in the corrupted
+bytes.
+
+![outcfb](outcfb.png)
+
+### Task 4.5
+
+In OFB mode, I repeated the same experiment and was suprised to find the same result as before, but this
+time without any nonsensical symbols where the corrupted byte lived and just empty spaces in their place.
+This shows that again, really no information was lost. In fact, our underlying characters weren't even split
+up or altered in any way. Really, no information was lost in the act of the corruption. As evidence, here is
+my result from running the same commands as before using ofb mode:
+
+![outofb](outofb.png)
+
+### Task 5.1
+
+For this task, I enlist a short text file holding the message
+"It is not certain that everything is uncertain."
+
+To begin, I encrypted this plaintext using two different IVs as follows:
+
+![iv1](iv1.png)
+
+Indeed, this demonstrates that with a different IV under the same key, we have a unique
+encrypted message. This maintains the security of our data.
+
+If we encrypt the plaintext using the same IV, unsurprisingly we gain the same encrypted message each
+time. This means that our encrypted data may not be secure!
+
+![iv2](iv2.png)
+
+The main observation here is that the same IV under the same key may create the same encrypted message,
+which won't happen if we have a unique IV for each encryption. Why does this matter? If we know how the
+encryption scheme being used actually works, we could potentially deconstruct the encrypted output
+with the knowledge that the same IV is being used consistently. We want each ciphertext to be
+indestinguishable, so that there may be no deducable patterns within our data. We can't have
+indistinguishable ciphertexts if we continually reuse the same IV, which means we open ourselves
+up to someone deducing patterns in our data, which could very well be used against us. Just from a
+fundamental level, even if we encrypt something using very secure methods but do so in an easily
+repeatable way, we aren't nearly as secure as we would be if we'd encrypted information in an entirely
+unrepeatable manner.
+
 
