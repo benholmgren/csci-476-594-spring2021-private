@@ -69,6 +69,9 @@ Lastly, here is my command for ebc encryption and the resulting output:
 
 ![choiceebcscreen](choiceebcscreen.png)
 
+I was surprised not to see that much of a pattern throughout the image. It must just be that, in general
+this is an image without too much continuous color anywhere. If we look super closely at the encrypted image
+though, we can see the trees lightly in the background, which lightly indicate the patterns we might expect.
 
 ### Task 3.1
 
