@@ -123,7 +123,7 @@ characters thereafter. Then in effect we could lose everything following the fir
 corrupted byte. But so long as the decryption is independent for each character, all we'll
 lose out on are the corrupted characters.
 
-So, for the sake of specificity, I'll detail what will happen in each of the following
+So, for the sake of specificity, I'll detail what I think will happen in each of the following
 encryption schemes:
 
 * ECB: ECB works in blocks which aren't dependent on one another, so if a change occurs
@@ -141,7 +141,8 @@ portions of the encrypted version are dependent on other portions. As a result, 
 lose our information following a corrupted byte in the encrypted message, since the
 contents of the message being decrypted are assumed to be a result of prior characters.
 
-* OFB: Since OFB is non parallelizable in both encryption and decryption, it must
+* OFB: Since OFB is non parallelizable in both encryption and decryption, I'd
+think it must
 lose out on the contents following a corrupted byte, since in both encryption and
 decryption, any given portion of a the message is dependent on earlier portions.
 
@@ -155,7 +156,11 @@ case, we'd have a full string containing padded values and a corrupted value mix
 somewhere in our final output. However, I wouldn't expect this result to force our
 original content to be effected at all. Furthermore, we shouldn't see this kind of issue
 when using OFB and CFB, since neither of the two methods use padding in the first place.
-We will see if my hypotheses holds up in practice.
+We will see if my hypotheses hold up in practice.
+
+(In practice, they didn't really hold up. It turned out that every case only really had corruption within
+the original block. There must be some kind of infrastructure to stop this kind of subsequent corruption
+from occurring.)
 
 ### Task 4.2
 
