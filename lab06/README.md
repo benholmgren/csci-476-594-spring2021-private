@@ -99,11 +99,11 @@ Next, I repeated 3.1 with ecb:
 
 Then I repeated 3.1 with cfb:
 
-![3.2cfb](cfb.png)
+![3.2cfb](3.2cfb.png)
 
 And finally, I repeated 3.1 with efb:
 
-![3.2efb](efb.png)
+![3.2efb](3.2ofb.png)
 
 Then indeed, for the three methods of encryption that we've attempted, we find that the
 only method that uses padding is ECB. In this case, the slots padding our 5 byte file
