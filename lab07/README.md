@@ -73,7 +73,7 @@ To start, I inserted the array containing all "A"'s as indicated by the prompt.
 Then, I compiled this and found that the offset of the start of the array was
 at byte 4160 using bless. Then I used the collision generator to locate where
 md5 would have collisions in my prefix, which contained the the entire compiled
-version of the program up to byte 4160. (For this, I used 'tail'). Then, on the
+version of the program up to byte 4288. (For this, I used 'tail'). Then, on the
 collision's output, I recovered everything following the 128th byte onward in
 each version. Then I could simple concatenate the prefix, each of the collided
 segments (denoted P and Q), and then confirm that the binary files differed, while
@@ -82,6 +82,14 @@ the hash for each file remained consistent.
 As evidence, here are the commands I used to execute the task successfully:
 
 ![answer](answer.png)
+
+And as a final verification, indeed, our a1.out and a2.out files produce a
+different output. The changes may be subtle, though I highlighted one in the
+screenshot as proof of concept.
+
+![verify](verify.png)
+
+### Task 4
 
 
 
