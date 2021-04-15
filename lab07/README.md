@@ -71,15 +71,18 @@ the md5 algorithm again and discover that they indeed remain the same.
 
 To start, I inserted the array containing all "A"'s as indicated by the prompt.
 Then, I compiled this and found that the offset of the start of the array was
-at byte 4160 using bless. Then I used the collision generator to locate where
+at byte 12320 using bless. This isn't a multiple of 64, so we then moved 
+up to the nearest multiple of 64, namely 12352. 
+Then I used the collision generator to locate where
 md5 would have collisions in my prefix, which contained the the entire compiled
-version of the program up to byte 4288. (For this, I used 'tail'). Then, on the
+version of the program up to byte 12480. (For this, I used 'tail'). Then, on the
 collision's output, I recovered everything following the 128th byte onward in
 each version. Then I could simple concatenate the prefix, each of the collided
 segments (denoted P and Q), and then confirm that the binary files differed, while
 the hash for each file remained consistent.
 
-As evidence, here are the commands I used to execute the task successfully:
+As evidence, here are the commands I used to execute the task successfully after
+compiling the code into the 'pa' binary:
 
 ![answer](answer.png)
 
@@ -90,6 +93,28 @@ screenshot as proof of concept.
 ![verify](verify.png)
 
 ### Task 4
+
+As before, our strategy is to manipulate an array using these md5 collisions.
+However, this time if we pull off such a thing, it will completely alter the
+logic of the program, executing some kind of malicious code. We
+proceed as in task 3.
+
+In this instance, we find that the contents of the array begin at the 12320th 
+byte. However, in order for the attack to work, we must assign a prefix
+which is a multiple of 64. Thus, we find the nearest multiple of 64 (which is
+12352, and use this to complete the attack.
+
+To begin, we'll inject a 'p' value in to index 12352, for one executable, 
+which should cause the two arrays to not be equal, forcing the execution of
+malicious code. To have the same hash but execute benign code, we must insert
+a 'p' value at the same index, (which will alter the contents of the array), so
+then we'll need to insert another 'p' value beginning at the same place in the
+second array. Since we're resorting to such a step, then in the malicious code
+we must also insert another value in the second array so that the
+two binaries retain the same hash. So we therefore insert a 'q' value in the
+second array in the malicious binary, so that the output remains malicious.
+
+In actuality, the commands are as follows:
 
 
 
