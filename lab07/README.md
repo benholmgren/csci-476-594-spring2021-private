@@ -116,7 +116,24 @@ second array in the malicious binary, so that the output remains malicious.
 
 In actuality, the commands are as follows:
 
+![command](command.png)
 
+Where, we had to come up with some trickery to get the effect of two different
+executions with the same hash. Since our modifications to the array had to begin
+at a byte that was not a multiple of 64 but instead a multiple of 32, we needed
+to offset our modifications in each array by 32 bytes. The easiest way to do so
+was by creating arrays of size 160 bytes each, that way they align themselves
+in memory, as is illustrated below.
+
+![mem](mem.png)
+
+From there, all we needed to do was to generate p and q as before, but this time
+to insert copies of 'p' 32 bytes into each array (which is strategically
+guaranteed to land on a multiple of 64, so that no issues arise with buffers)
+for our first output. For the second output, we insert a copy of 'q' into the 
+first array followed by a copy of 'p' 32 bytes into the following array. This
+allows us to gain each program with differing behavior, while still retaining
+the same hash as illustrated above.
 
 
 
