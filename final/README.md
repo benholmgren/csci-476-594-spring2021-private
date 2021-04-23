@@ -197,7 +197,7 @@ could insert their own vulnerable compiler onto a system to exploit.
 
 (iii.)
 
-A final approack is to just make the stack not executable. Generally, we don't need the
+A final approach is to just make the stack not executable. Generally, we don't need the
 stack to be executable anyways, so if it's not executable, the idea is that an extended
 buffer couldn't find its way onto the stack and then be executed in an unintended manner,
 since the stack is just simply not executable. In practice, this too can be overcome,
@@ -207,3 +207,87 @@ for anyone to accomplish anything in the world, and just because
 the stack is off limits doesn't mean that other areas necessarily could be reached
 and exploited. Though, finding these other exploitable areas is an annoying challenge
 in its own right.
+
+### Task 2.1
+
+Reflecting back on the activity we thought about in class on 4/20, my approach was to use
+ AES-CTR to encrypt sensitive data in the xml files by default, with an option to use GCM
+if it were preffered by clients. I would only
+encrypt the actual raw data itself, and avoid encrypting all of the various xml commands
+throughout the files. 
+
+To address objective (1), I chose to use AES rather than some of the other approaches because
+it made the most sense in this setting to use symmetric-key cryptography. Since the sensitive
+data is just living on the desktops of our customers but we don't want them to access it,
+there's no reason to have public key infrastructure- the sensitive data needs to only
+be accessible by our team, and only members of our internal group need to encrypt/decrypt
+the data. As for CTR, this is where my approach is the most limited because integrity checks
+aren't present, as they would be with say, GCM. For that, I'd consider adding an optional
+feature where clients could use GCM instead in order to gain these kinds of integrity checks.
+However, CTR still warns users if there was anything that it was unable to decrypt
+successfully, so at least clients would have some sense of the problem were any corruption
+to occur.
+
+As for objective (2), AES is a relatively efficient framework. As I mention in an earlier
+problem, AES in practice runs about 1000 times faster than RSA (pg 541 of Computer & Internet
+Security). I chose CTR specifically because it doesn't use padding, so there will be less
+potential for file corruption and overall messiness than if I were to use say, CBC. It 
+appears that this mechanism of AES-CTR is on par with the fastest encryption algorithms, and 
+minimizing overhead is a major strength of AES in general. Data loss is a specific strength
+of AES-CTR, since it automatically decrypts as much data as is possible. The major drawback
+here however, is that we're lacking on integrity checking unless a user opts in to use GCM-
+which basically just undoes all of the things we'd gain out of using CTR in the first place
+to decrypt as much as is possible rather than just giving up once an issue occurs. In
+retrospect, it might've been beneficial in my approach to use something like SHA-256 to
+conduct error checking, while still being able to open the program. This isn't what I
+had settled on in the activity and through the end of class, but it's the one thing I might
+change in hindsight about my approach, so that I also have integrity checking.
+
+
+### Task 2.2
+
+* Compliance is intended to make sure that companies and various entities throughout
+tech are adhering to standards that have been set to maintain the security of people's 
+data. Compliance is generally set by government or other accepted third parties throughout
+industry and the tech community at large, and the idea is just to make sure that
+technical infrastructure being used follows this set regulatory framework. This is
+important, because it is a meaningful attempt to protect the everyday person
+who is using the internet and the many services it offers. That person should be able
+to feel safe in uploading sensitive information online, and if the website
+is compliant to certain rigorous standards, the intent is that a user is indeed safe in
+doing so.
+
+* A compliance framework is just really a list of rules and regulations that need to be
+followed in order to meet the specified standard for a company or other technical entity.
+One especially well known example could be something like HIPPA, which is a compliance
+framework for companies that process sensitive health information. Really, HIPPA is just
+an agreed upon set of rules and guidelines throughout that community, which every entity
+falling under that category needs to follow.
+
+* Three examples of compliance rules/tests include:
+
+Red Hat Enterprise Linux OS must be configured to disable USB mass storage. USB drives 
+are unknown entities with unknown data, and theoretically someone could come along with 
+a USB and introduce some kind of malicious code in this way. Creating a rule to disable
+USB mass storage combats this kind of attack, and is beneficial for the main objectives
+of compliance.
+
+Red Hat Enterprise Linux OS must be configured so that the root accound must be the
+only acound with unrestricted access to the system. This just boils down to the basic
+security principle of only giving as many permissions as are completely necessary.
+If it were possible to give multiple accounts heightened access, a disgruntled employee
+or whoever else could potentially gain access to the highest possible privilege and do
+real damage, since they could more easily get root access by way of another nonroot 
+account. Removing such threats is undoubtedly beneficial for compliance.
+
+A final example of a STIG brought up in lecture is that Red Hat Linux must have an audit
+system configured to audit all use of setuid and setgid programs. These kinds of programs
+are a logical thing to exploit, as they have a lot of power in changing passwords and 
+that sort of thing. Just keeping track of every time either of these types of programs
+are invoked goes a really long way in monitoring potentially malicious activity, getting
+to the bottom of where setuid types of attacks are coming from, and mitigating them.
+Certainly, this is also beneficial for compliance, and keeping the everyday user safe
+from the latest attacks.
+
+
+
