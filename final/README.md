@@ -360,7 +360,8 @@ A malicious employee could definitely make this happen by changing say, their pa
 in just the right way. In the pasword field when it's being provided by the user,
 a malicious user could just type 
 
-```password', 1000000); #
+```
+password', 1000000); #
 ```
 
 to insert something into the password field, make themselves a millionaire, end the
@@ -382,11 +383,13 @@ than what was intended (we made them a millionaire!)
 Here, we could use a very similar approach from 4.2, where we could enter in the password
 field 
 
-```password'; UPDATE employee SET Salary=0 WHERE Name='Good Employee'; #
+```
+password'; UPDATE employee SET Salary=0 WHERE Name='Good Employee'; #
 ```
 
 Where really, any command could follow from the call to
-```password;'
+```
+password;'
 ```
 and the important thing is that, whatever following statement is concluded with a comment.
 Here, I arbitrarily chose to set another person's salary to 0, but one could do just
