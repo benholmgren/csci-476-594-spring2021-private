@@ -1,10 +1,3 @@
-```YAML
----
-useMath: true
----
-```
-
-
 ## Le Finale
 ## Ben Holmgren
 ## benjamin.holmgren1@student.montana.edu
@@ -119,10 +112,21 @@ interesting, and potentially dangerous vulnerability in the world that we live i
 
 ### Task 1.7
 
-After Alice and Bob have sent their initial messages, Alice can compute $(g^y mod p)^x mod p
-= g^{yx} mod p$ and Bob can compute $(g^x mod p)^y mod p = g^{xy}mod p$ using each of
-their privately generated $x$ and $y$ values respectively. But in this way, Bob and Alice
-get a common secret key, which is this shared value of $g_{xy}mod p$ that each party is
+After Alice and Bob have sent their initial messages, Alice can compute 
+```math
+(g^y mod p)^x mod p = g^{yx} mod p
+```
+and Bob can compute 
+```math
+(g^x mod p)^y mod p = g^{xy}mod p
+```
+using each of
+their privately generated x and y values respectively. But in this way, Bob and Alice
+get a common secret key, which is this shared value of 
+```math
+g_{xy}mod p
+```
+that each party is
 able to compute.
 
 Yet another triumph in the annals of human history/computation of cyclic groups!
