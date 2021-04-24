@@ -290,4 +290,127 @@ Certainly, this is also beneficial for compliance, and keeping the everyday user
 from the latest attacks.
 
 
+### Task 3.1
 
+Upon inspection of the source code, we can see that the program is really just a call
+to /bin/cat, which will cat out the file that is specified in the next argument
+by a user. Indeed, we can verify immediately that this is the case:
+
+![audit1](audit1.png)
+
+But really this is just the tip of the iceberg with this program. The intent here
+seems to be to not only just run the 'cat' command as normal, but in making
+the program Set-UID, to run the 'cat' command with heightened privilege. The intent
+of the program seems to be that this should
+allow someone to read any file, even a file only readable with root access.
+To verify that claim, we can try to read the contents of say, the /etc/shadow file:
+(I quickly realized that I had the Set-UID countermeasure turned on, so I also turned
+that off so that this program would work in the intended, vulnerable manner.)
+
+![shadow](shadow.png)
+
+The really big thing to note here is that the program calls 'system' which is
+infamous at this point... there is no seperation between code and data with this
+call, so we can definitely do something malicious with this program, as we'll
+see soon.
+
+### Task 3.2
+
+Let's now try and run the most dangerous command with elevated privilege possible:
+'bin/sh'. Because of how 'system' works, we should just be able to tack on this command
+after our first argument intended for '/bin/cat', within the same set of quotation marks.
+
+![root1](root1.png)
+
+Importantly, I realized that this attack necessarily must occur using quotation marks
+as is done in the above output, so as to combine the commands in the
+call to 'system'.
+
+### Task 3.3
+
+Since there's now a seperation between code and data, the above attack won't work.
+However, the 'more' command will allow us to view full pages with root access. If
+we were somehow able to call /bin/sh while in the viewer, one imagines that we'd have
+root access while making that call, and we'd obtain a root shell.
+
+Well, it turns out that we can do exactly that in the file viewer of more using !(command)
+in the viewer. In order for the full-page file viewer to actually work, I needed
+to call more for a large file, like for instance /etc/shadow. Doing that, I could then
+view the file with heightened privilege, and then execute !bin/sh once inside to gain
+a root shell:
+
+![rootbaby](rootbaby.png)
+
+Clearly, this is not something that I was supposed to be able to do by the intentions
+of the creation of the file.
+
+### Task 4.1
+
+The fundamental cause of SQL injection is that data and code can be mixed, as was also
+the fundamental cause of so many attacks throughout the course (XSS and system() come
+to mind most immediately). So my inclination would be to say that, if the filtering logic
+indeed is able to remove **every** possible character that could be associated with code,
+a SQL injection attack would not be feasible. Without the ability to gain privilege
+through inserting code where data is intended, which is the entire approach used in SQL
+injection, such an attack doesn't seem possible.
+
+### Task 4.2
+
+A malicious employee could definitely make this happen by changing say, their password,
+in just the right way. In the pasword field when it's being provided by the user,
+a malicious user could just type 
+
+```password', 1000000); #
+```
+
+to insert something into the password field, make themselves a millionaire, end the
+VALUES line of code, and then comment out the leftover code that was intended to conclude
+the statement.
+
+As evidence, here is the resulting output from replacing the above command where the
+'passwd' variable would normally go in the code:
+
+![bademp](bademp.png)
+
+Indeed, from this output, we can see that this technique of hijacking the rest of the
+statement and then commenting out the remaining bit of the intended code yields
+the desired result, which is that our malicious employee has a much larger salary
+than what was intended (we made them a millionaire!)
+
+### Task 4.3
+
+Here, we could use a very similar approach from 4.2, where we could enter in the password
+field 
+
+```password'; UPDATE employee SET Salary=0 WHERE Name='Good Employee'; #
+```
+
+Where really, any command could follow from the call to
+```password;'
+```
+and the important thing is that, whatever following statement is concluded with a comment.
+Here, I arbitrarily chose to set another person's salary to 0, but one could do just
+about anything at that point. I also took full advantage of the ability to execute
+multiple commands in one line of SQL. 
+
+As evidence of my technique, I ran the command that would result from such a manipulation
+directly in the SQL command line, and viewed the 'employee' table I'd created previously.
+
+![SQLhellions](hellions.png)
+
+Indeed, we know that whatever we'd input as the '$passwd' variable would be directly
+pasted into the SQL code following the first ' symbol. Thus, we know that
+our technique of hijacking the code after this point is effective in whatever context
+such code would be presented, since we can simply insert whatever commands we desire
+and comment out the rest of the code thereafter.
+
+### In Conclusion
+
+Thus concludes the mandatory work for those of us in the undergraduate section. At that,
+we are also done with computer security for the semester. To reflect on the journey that
+we've had, I'd simply like to say thank you for your efforts to share this subject with
+me. I tend to stay as far away from systems and those types of concepts as possible,
+but I learned in here that those topics can also be incredibly interesting and
+fulfilling themselves. I thank you for broadening my horizons, and for presenting
+me with a whole lot of engaging and worthwhile problem solving this semester. I wish
+you well.
