@@ -114,22 +114,25 @@ interesting, and potentially dangerous vulnerability in the world that we live i
 
 After Alice and Bob have sent their initial messages, Alice can compute 
 ```math
-(g^y mod p)^x mod p = g^{yx} mod p
+(g^y mod p)^x mod p = g^(yx) mod p
 ```
 and Bob can compute 
 ```math
-(g^x mod p)^y mod p = g^{xy}mod p
+(g^x mod p)^y mod p = g^(xy)mod p
 ```
 using each of
 their privately generated x and y values respectively. But in this way, Bob and Alice
 get a common secret key, which is this shared value of 
 ```math
-g_{xy}mod p
+g^(xy)mod p
 ```
 that each party is
 able to compute.
 
 Yet another triumph in the annals of human history/computation of cyclic groups!
+
+*Note:* This lack of latex math mode in the above equations makes me twitchy. 
+I don't like it, but unfortunately my time is especially finite at the moment and sacrifices must be made.
 
 ### Task 1.8
 
